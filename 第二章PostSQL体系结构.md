@@ -58,4 +58,4 @@ postgreSQL由连接管理系统、编译执行系统、存储管理系统、事�
 [2]:	https://github.com/zhizhengyang/postgresql/tree/master/src/backend/catalog
 [3]:	https://github.com/zhizhengyang/postgresql/blob/master/src/bin/initdb/initdb.c
 
-[image-1]:	https://github.com/zhizhengyang/learnpgsql/blob/master/img/initdb.jpg
+[image-1]:	https://pic4.zhimg.com/80/v2-8ea8c0bded4a913c085a55a830bf15df_1440w.jpg
