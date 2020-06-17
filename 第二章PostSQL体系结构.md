@@ -44,12 +44,12 @@ postgreSQL由连接管理系统、编译执行系统、存储管理系统、事�
 &ensp;每个表和索引都存储在其所属数据库目录下的独立文件里，以该表或者索引的filenode号命名，该号码记录在系统表pg\_class中对应元组的relfilenode属性中。</br>
 &ensp;在表或者索引超过1GB时，它就被分裂为多个1GB大小的段。第一个段以filenode命名，后面为filenode.1,filenode.2^^……</br>
 &ensp;如果表规模过大，那会有相关的toast表，存储无法在数据行放置的超大外置数据。表对应的pg\_class元组的reltoastrelid属性记录了它的toast表oid。</br>
-&ensp;在pgsql中，默认会将数据文件放在PGDATA制定的目录下，但如果磁盘不足的话，可以使用**表空间**进行扩展，表空间的物理意义是一个新的磁盘目录。每个用户定义的表空间在PGDATA/pg\_tblspc目录里面都有一个符号链接，指向其物理目录，该符号链接用表空间的oid命名。![]()
+&ensp;在pgsql中，默认会将数据文件放在PGDATA制定的目录下，但如果磁盘不足的话，可以使用**表空间**进行扩展，表空间的物理意义是一个新的磁盘目录。每个用户定义的表空间在PGDATA/pg\_tblspc目录里面都有一个符号链接，指向其物理目录，该符号链接用表空间的oid命名。
 
 ### 2.2.1 initdb的执行过程
 
 将从[initdb.c][3]文件中的main函数开始执行。包含设置环境变量、设置中断信号处理函数、创建数据目录、创建系统视图、系统表toast表等。</br>
-![][image-2]
+![][image-1]
 ### 2.2.2 系统数据库
 
 
@@ -58,4 +58,4 @@ postgreSQL由连接管理系统、编译执行系统、存储管理系统、事�
 [2]:	https://github.com/zhizhengyang/postgresql/tree/master/src/backend/catalog
 [3]:	https://github.com/zhizhengyang/postgresql/blob/master/src/bin/initdb/initdb.c
 
-[image-2]:	https://wx2.sbimg.cn/2020/06/17/initdb.md.jpg
+[image-1]:	https://github.com/zhizhengyang/learnpgsql/blob/master/img/initdb.jpg
