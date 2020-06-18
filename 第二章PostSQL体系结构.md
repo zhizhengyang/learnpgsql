@@ -18,8 +18,8 @@ postgreSQL由连接管理系统、编译执行系统、存储管理系统、事�
 
 - 在src/backend/catalog目录下的"pg\_xxx.c"文件定义了相应的操作函数，indexing.c文件定义了四个操作系统表索引的函数,toasting.c文件定义了四个操作系统表的TOAST表的函数
 
-[系统表数据结构代码][1]</br>
-[相应操作函数代码][2]
+[系统表数据结构代码](https://github.com/zhizhengyang/postgresql/tree/master/src/include/catalog)</br>
+[相应操作函数代码](https://github.com/zhizhengyang/postgresql/tree/master/src/backend/catalog)
 
 ### 2.1.1 主要系统表及功能
 | 表名       | 功能                          |
@@ -48,14 +48,7 @@ postgreSQL由连接管理系统、编译执行系统、存储管理系统、事�
 
 ### 2.2.1 initdb的执行过程
 
-将从[initdb.c][3]文件中的main函数开始执行。包含设置环境变量、设置中断信号处理函数、创建数据目录、创建系统视图、系统表toast表等。</br>
-![][image-1]
+将从[initdb.c](https://github.com/zhizhengyang/postgresql/blob/master/src/bin/initdb/initdb.c)文件中的main函数开始执行。包含设置环境变量、设置中断信号处理函数、创建数据目录、创建系统视图、系统表toast表等。</br>
+![initdb.jpg](https://s1.ax1x.com/2020/06/18/NZzscd.jpg)
 ### 2.2.2 系统数据库
 
-
-
-[1]:	https://github.com/zhizhengyang/postgresql/tree/master/src/include/catalog
-[2]:	https://github.com/zhizhengyang/postgresql/tree/master/src/backend/catalog
-[3]:	https://github.com/zhizhengyang/postgresql/blob/master/src/bin/initdb/initdb.c
-
-[image-1]:	http://upload.ouliu.net/i/20200617164841qazvz.jpeg
