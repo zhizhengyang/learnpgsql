@@ -183,7 +183,17 @@ Postgres进程的主要[源代码](https://github.com/zhizhengyang/postgresql/tr
 
 ### 2.6.7 简单查询的执行流程
 
-&ensp;系统调用exec_simple_query函数来执行简单查询
+&ensp;系统调用exec_simple_query函数来执行简单查询,流程如下图。
+![execsimplequery.jpg](https://s1.ax1x.com/2020/06/19/Nu9GLQ.jpg)
+&ensp;它解读用户输入的字符串形式的命令并检查合法性，最终执行并返回结果。数据库的编译器、分析器、优化器和执行器**都是在这个函数中调用的**，它们相互协作，构成了服务进程的主体，下面大致说明下它们的主要功能和代码的位置。
+
+1. 编译器：编译器是主流程中的第一个模块。它的作用是扫描用户输入的字符串形式的命令，检查其合法性，并将其转换为Postgres定义的内部数据结构。Postgres为每一条SQL命令都定义了相应的C语言结构体，用来存放命令中的各种参数。编译器是利用著名的lex和yacc工具编写的，其入口函数为pg_parse_query函数。代码位于src/backend/paser目录下的[scan.l](https://github.com/zhizhengyang/postgresql/blob/master/src/backend/parser/scan.l)和[gram.y](https://github.com/zhizhengyang/postgresql/blob/master/src/backend/parser/gram.y)文件中
+
+2. 分析器：分析器接收编译器传递过来的各种命令数据结构（语法树），对它们进行相应的处理，最终转换为统一的数据结构Query。如果是查询命令，在生成Query后进行规则重写。重写部分的入口是QueryRewrite函数。如果是查询命令，在生成Query后进行规则重写（rewrite）。重写部分的入口时QueryRewrite函数，代码位于[src/backend/rewrite](https://github.com/zhizhengyang/postgresql/tree/master/src/backend/rewrite)目录下
+
+3. 优化器：优化器接收分析器输出的Query结构体，进行优化处理后，输出执行器可以执行的计划。一个特定的SQL查询可以以多种不同的方式执行，优化器将检查每个可能的查询计划，最终选择运行最快的查询计划。优化器的入口是pg_plan_query函数，代码位于[src/backend/optimizer](https://github.com/zhizhengyang/postgresql/tree/master/src/backend/optimizer)下
+
+4. 执行器：执行非查询命令的入口函数是ProcessUtility，代码位于[src/backend/tcop/utility.c](https://github.com/zhizhengyang/postgresql/blob/master/src/backend/tcop/utility.c)，该函数的主体结构是一个switch语句，根据输入的命令类型调用相应的执行函数。执行查询命令的入口函数是ProcessQuery，代码主要位于[src/backend/executor](https://github.com/zhizhengyang/postgresql/tree/master/src/backend/executor)
 
 
 
